@@ -5,39 +5,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadProjects() {
-    fetch('./data/projects.json')
+    fetch('projects.json')  // must be in root
         .then(response => response.json())
         .then(data => {
-            const projectsContainer = document.getElementById('projects-container');
+            const container = document.getElementById('projects');
+
             data.forEach(project => {
-                const projectCard = createProjectCard(project);
-                projectsContainer.appendChild(projectCard);
+                const card = document.createElement('div');
+                card.classList.add('project-card');
+
+                card.innerHTML = `
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    <img src="${project.image}" alt="${project.title}">
+                    <a href="${project.liveDemoUrl}" target="_blank">View Project</a>
+                `;
+
+                container.appendChild(card);
             });
         })
-        .catch(error => console.error('Error loading projects:', error));
-}
-
-function createProjectCard(project) {
-    const card = document.createElement('div');
-    card.classList.add('project-card');
-
-    const title = document.createElement('h3');
-    title.textContent = project.title;
-    card.appendChild(title);
-
-    const description = document.createElement('p');
-    description.textContent = project.description;
-    card.appendChild(description);
-
-    const image = document.createElement('img');
-    image.src = project.imageUrl;
-    image.alt = project.title;
-    card.appendChild(image);
-
-    const link = document.createElement('a');
-    link.href = project.liveDemoUrl;
-    link.textContent = 'View Project';
-    card.appendChild(link);
-
-    return card;
+        .catch(error => console.error("Error loading projects:", error));
 }
