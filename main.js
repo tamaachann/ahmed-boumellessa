@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadProjects() {
-    fetch('projects.json')  // must be in root
+    fetch('projects.json')
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('projects');
@@ -18,7 +18,10 @@ function loadProjects() {
                     <h3>${project.title}</h3>
                     <p>${project.description}</p>
                     <img src="${project.image}" alt="${project.title}">
-                    <a href="${project.liveDemoUrl}" target="_blank">View Project</a>
+                    <div>
+                        <a href="${project.liveDemo}" target="_blank">Live Demo</a>
+                        <a href="${project.repository}" target="_blank">Repository</a>
+                    </div>
                 `;
 
                 container.appendChild(card);
